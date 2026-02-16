@@ -1,0 +1,21 @@
+name: Bench Rerun Failed Fixture
+run-name: Bench rerun failed fixture (${{ inputs.seed_id }})
+
+on:
+  workflow_dispatch:
+    inputs:
+      seed_id:
+        description: "Seed identifier used by benchmark fixture seeding"
+        required: true
+        type: string
+
+jobs:
+  intentionally-fail:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Emit fixture context
+        run: echo "seed_id=${{ inputs.seed_id }}"
+      - name: Intentionally fail for rerun_failed capability tests
+        run: |
+          echo "benchmark fixture intentional failure"
+          exit 1
